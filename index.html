@@ -302,7 +302,7 @@
       text-align: center; padding: 0 var(--g);
     }
     .split__tag {
-      font-family: var(--fd); font-size: clamp(36px, 11vw, 56px); font-weight: 400;
+      font-family: var(--fd); font-size: clamp(42px, 11vw, 56px); font-weight: 400;
       letter-spacing: .1em; text-transform: uppercase; color: #fff;
       display: block; line-height: .9; margin-bottom: 14px;
     }
@@ -484,7 +484,8 @@
     .sticky-cta__inner { display: flex; align-items: center; justify-content: space-between; gap: 16px; }
     .sticky-cta__left { display: flex; flex-direction: column; gap: 3px; min-width: 0; flex: 1; }
     .sticky-cta__logo img {
-      height: 11px; width: auto; max-width: 100%; display: block;
+      width: 100%; height: auto; max-height: 14px; display: block;
+      object-fit: contain; object-position: left center;
       filter: invert(1) brightness(10);
     }
     .sticky-cta__label {
