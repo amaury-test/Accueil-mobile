@@ -274,7 +274,7 @@
       padding: 12px 0; background: var(--bg);
       cursor: default; user-select: none;
     }
-    .marquee__track { display: inline-flex; white-space: nowrap; animation: marqueeScroll 38s linear infinite; }
+    .marquee__track { display: inline-flex; white-space: nowrap; animation: marqueeScroll 38s linear infinite; will-change: transform; transform: translateZ(0); }
     .marquee__item { font-family: var(--fd); font-size: 12px; letter-spacing: .22em; text-transform: uppercase; color: var(--text); padding: 0 18px; }
     .marquee__sep { color: var(--gold); font-size: 6px; line-height: 2; }
     @keyframes marqueeScroll { from { transform: translateX(0); } to { transform: translateX(-50%); } }
@@ -287,10 +287,10 @@
       display: flex; align-items: center; justify-content: center;
       cursor: pointer;
     }
-    .split__img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: top center; filter: brightness(.72); }
+    .split__img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: top center; filter: brightness(.88); }
     .split__overlay {
       position: absolute; inset: 0;
-      background: radial-gradient(ellipse at center, rgba(11,14,21,.28) 0%, rgba(11,14,21,.62) 100%);
+      background: radial-gradient(ellipse at center, rgba(11,14,21,.1) 0%, rgba(11,14,21,.38) 100%);
     }
     .split__num {
       position: absolute; top: 14px; right: 14px;
@@ -620,7 +620,11 @@
       <span class="marquee__item" data-i18n="mq.8">Coutures anglaises</span><span class="marquee__sep">&#9679;</span>
       <span class="marquee__item" data-i18n="mq.9">Tissus 100% coton double retors</span><span class="marquee__sep">&#9679;</span>
       <span class="marquee__item" data-i18n="mq.10">Coutures 7 pts/cm</span><span class="marquee__sep">&#9679;</span>
+      <span class="marquee__item" data-i18n="mq.11">Hirondelles de renfort</span><span class="marquee__sep">&#9679;</span>
+      <span class="marquee__item" data-i18n="mq.12">Boutons cousus en croix</span><span class="marquee__sep">&#9679;</span>
       <span class="marquee__item" data-i18n="mq.13">Finitions luxueuses</span><span class="marquee__sep">&#9679;</span>
+      <span class="marquee__item" data-i18n="mq.14">Avantage Premiere Manche</span><span class="marquee__sep">&#9679;</span>
+      <span class="marquee__item" data-i18n="mq.15">6/0 — 6/0</span><span class="marquee__sep">&#9679;</span>
     </div>
   </div>
 
