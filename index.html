@@ -1,0 +1,1216 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="theme-color" content="#0B0E15">
+  <title>Premiere Manche — Chemises Formelles & Casual</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://fonts.cdnfonts.com">
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.cdnfonts.com/css/gilroy-free" rel="stylesheet">
+  <style>
+    /* ── RESET ── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    img { display: block; width: 100%; height: 100%; object-fit: cover; }
+    a { text-decoration: none; color: inherit; }
+    ul { list-style: none; }
+    button { cursor: pointer; font-family: inherit; border: none; background: none; }
+
+    /* ── VARIABLES ── */
+    :root {
+      --bg: #FFFFFF;
+      --bg2: #F3F1EC;
+      --dk: #0B0E15;
+      --text: #0C0C0C;
+      --muted: #787878;
+      --border: #E2DFDA;
+      --gold: #B08A26;
+      --tr: 0.26s cubic-bezier(.25,.1,.25,1);
+      --g: 20px;
+      --nav-h: 52px;
+      --banner-h: 28px;
+      --fd: 'Bebas Neue', sans-serif;
+      --fb: 'Gilroy', sans-serif;
+      --fi: 'Cormorant Garamond', serif;
+    }
+
+    /* ── BASE ── */
+    body {
+      font-family: var(--fb);
+      background: var(--bg);
+      color: var(--text);
+      font-size: 16px;
+      line-height: 1.6;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    /* ── GRAIN ── */
+    body::before {
+      content: '';
+      position: fixed; inset: 0;
+      z-index: 9998; pointer-events: none;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+      background-size: 160px 160px;
+      opacity: 0.022;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+    }
+
+    /* ── BANNER ── */
+    .banner {
+      position: fixed; top: 0; left: 0; right: 0;
+      z-index: 910; height: var(--banner-h);
+      background: #000; overflow: hidden;
+      transition: height .28s ease, opacity .28s ease;
+    }
+    .banner.hidden { height: 0 !important; opacity: 0; pointer-events: none; }
+    .banner__ticker { position: absolute; top: 0; bottom: 0; left: 0; right: 36px; overflow: hidden; }
+    .banner__msg {
+      position: absolute; top: 50%; left: 0;
+      white-space: nowrap;
+      font-family: var(--fb); font-size: 10px; font-weight: 300;
+      letter-spacing: .18em; text-transform: uppercase;
+      color: rgba(255,255,255,.88);
+      transform: translateY(-50%) translateX(100vw);
+    }
+    .banner__msg.run { animation: bannerTick 9s linear forwards; }
+    @keyframes bannerTick {
+      from { transform: translateY(-50%) translateX(100vw); }
+      to   { transform: translateY(-50%) translateX(calc(-100% - 20px)); }
+    }
+    .banner__close {
+      position: absolute; right: 4px; top: 50%; transform: translateY(-50%);
+      width: 36px; height: 28px;
+      display: flex; align-items: center; justify-content: center;
+      color: rgba(255,255,255,.4); background: none; border: none;
+    }
+    .banner__close svg { width: 12px; height: 12px; stroke: currentColor; stroke-width: 2; fill: none; }
+
+    /* ── NAV ── */
+    .nav {
+      position: fixed; top: var(--banner-h); left: 0; right: 0;
+      z-index: 900; height: var(--nav-h);
+      display: grid; grid-template-columns: 1fr auto 1fr;
+      align-items: center;
+      padding: 0 16px;
+      transition: background var(--tr), top .3s ease;
+      will-change: transform;
+    }
+    .nav.lit {
+      background: rgba(250,250,248,.96);
+      backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav__logo {
+      display: flex; align-items: center; justify-content: center;
+    }
+    .nav__logo img {
+      height: 13px; width: auto; display: block;
+      filter: invert(1) brightness(10);
+      transition: filter var(--tr);
+    }
+    .nav.lit .nav__logo img { filter: invert(0) brightness(1); }
+    .nav__right { display: flex; align-items: center; justify-content: flex-end; gap: 4px; }
+
+    /* Cart */
+    .nav__cart { position: relative; }
+    .nav__cart-badge {
+      position: absolute; top: 6px; right: 6px;
+      min-width: 15px; height: 15px; padding: 0 3px;
+      background: #C0392B; color: #fff;
+      font-family: var(--fb); font-size: 8px; font-weight: 400;
+      line-height: 15px; text-align: center; border-radius: 999px;
+      pointer-events: none;
+    }
+    .nav__icon {
+      display: flex; align-items: center; justify-content: center;
+      color: rgba(255,255,255,.75); transition: color var(--tr);
+      width: 44px; height: 44px;
+    }
+    .nav.lit .nav__icon { color: var(--muted); }
+    .nav__icon svg { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+
+
+    /* Burger */
+    .nav__burger {
+      display: flex; flex-direction: column; justify-content: center;
+      align-items: center; gap: 5px;
+      width: 44px; height: 44px; background: none; border: none; cursor: pointer;
+    }
+    .nav__burger span {
+      display: block; width: 22px; height: 1px;
+      background: rgba(255,255,255,.85);
+      transition: background var(--tr), transform var(--tr), opacity var(--tr);
+      transform-origin: center;
+    }
+    .nav.lit .nav__burger span { background: var(--text); }
+    .nav__burger.open span:nth-child(1) { transform: translateY(6px) rotate(45deg); }
+    .nav__burger.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+    .nav__burger.open span:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
+
+    /* ── MOBILE MENU ── */
+    .nav__mobile {
+      position: fixed; inset: 0; background: var(--dk);
+      z-index: 800; display: flex; flex-direction: column;
+      justify-content: center; align-items: center;
+      opacity: 0; pointer-events: none;
+      transition: opacity 0.32s ease;
+    }
+    .nav__mobile.open { opacity: 1; pointer-events: auto; }
+    .nav__mobile-link {
+      font-family: var(--fd); font-size: 13vw; font-weight: 400;
+      letter-spacing: .08em; text-transform: uppercase;
+      color: rgba(255,255,255,.35); padding: 7px 0;
+      transition: color var(--tr); display: block; min-height: 44px;
+      text-align: center;
+    }
+    .nav__mobile-link:active { color: #fff; }
+    .nav__mobile-sep { width: 1px; height: 18px; background: rgba(255,255,255,.06); margin: 4px auto; }
+    .nav__mobile-icons { display: flex; gap: 28px; margin-top: 36px; }
+    .nav__mobile-icons a {
+      font-family: var(--fb); font-size: 10px; font-weight: 300;
+      letter-spacing: .2em; text-transform: uppercase;
+      color: rgba(255,255,255,.24);
+      min-width: 44px; min-height: 44px;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .nav__mobile-lang {
+      display: flex; gap: 0; margin-top: 28px; justify-content: center;
+      border: 1px solid rgba(255,255,255,.1); align-self: center;
+    }
+    .nav__mobile-lang a {
+      font-family: var(--fb); font-size: 10px; font-weight: 300;
+      letter-spacing: .18em; text-transform: uppercase;
+      color: rgba(255,255,255,.28);
+      padding: 10px 20px; min-height: 44px;
+      display: flex; align-items: center; justify-content: center;
+      transition: color .2s ease, background .2s ease;
+    }
+    .nav__mobile-lang a + a { border-left: 1px solid rgba(255,255,255,.1); }
+    .nav__mobile-lang a.active { color: #fff; }
+
+    /* ── HERO ── */
+    .hero {
+      position: relative; height: 100svh; min-height: 600px;
+      overflow: hidden; display: flex; flex-direction: column;
+      justify-content: flex-end;
+      padding: 0 var(--g) clamp(88px, 14vh, 120px);
+    }
+    .hero__vid { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+    .hero__mask {
+      position: absolute; inset: 0;
+      background: linear-gradient(175deg, rgba(11,14,21,.04) 0%, rgba(11,14,21,.2) 35%, rgba(11,14,21,.93) 100%);
+    }
+    .hero__inner { position: relative; z-index: 1; }
+    .hero__h1 {
+      font-family: var(--fd); font-weight: 400;
+      font-size: clamp(72px, 22vw, 98px);
+      line-height: .86; letter-spacing: -.01em; text-transform: uppercase;
+      color: #fff; opacity: 0; animation: heroUp .9s .32s ease forwards;
+    }
+    .hero__h1 span { display: block; }
+    .hero__h1 em { font-style: normal; font-size: .78em; opacity: .52; letter-spacing: .02em; }
+    .hero__sub {
+      font-family: var(--fi); font-size: 13px; font-weight: 300; font-style: italic;
+      letter-spacing: .03em; color: rgba(255,255,255,.4);
+      margin-top: 14px; margin-bottom: 26px; line-height: 1.68;
+      opacity: 0; animation: heroUp .7s .5s ease forwards;
+    }
+    .hero__ctas {
+      display: flex; gap: 10px;
+      opacity: 0; animation: heroUp .7s .64s ease forwards;
+    }
+    .hero__cta {
+      flex: 1; font-family: var(--fb); font-size: 12px; font-weight: 300;
+      letter-spacing: .08em; text-transform: uppercase; color: #fff;
+      display: flex; align-items: center; justify-content: center; gap: 0;
+      border: 1px solid rgba(255,255,255,.55); border-radius: 999px;
+      padding: 13px 12px; min-height: 50px;
+      background: transparent; backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px); overflow: hidden;
+      transition: background .26s ease, border-color .26s ease, color .26s ease;
+    }
+    .hero__cta svg {
+      width: 13px; height: 13px;
+      fill: none; stroke: currentColor; stroke-width: 2; flex-shrink: 0;
+      opacity: 0; max-width: 0; margin-left: 0; transform: translateX(-4px);
+      transition: opacity .22s ease .06s, transform .22s ease .06s, max-width .22s ease, margin-left .22s ease;
+      overflow: hidden;
+    }
+    .hero__cta:active { background: rgba(255,255,255,.12); }
+    .hero__scroll-cue {
+      position: absolute; bottom: 32px; left: 50%;
+      transform: translateX(-50%); z-index: 1;
+      opacity: 0; animation: heroUp .5s .9s ease forwards;
+    }
+    .hero__scroll-line {
+      width: 1px; height: 34px;
+      background: rgba(255,255,255,.12);
+      position: relative; overflow: hidden;
+    }
+    .hero__scroll-line::after {
+      content: ''; position: absolute; top: -100%; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(255,255,255,.5);
+      animation: scrollLine 2s ease infinite;
+    }
+    @keyframes scrollLine { to { top: 100%; } }
+    @keyframes heroUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: none; }
+    }
+
+    /* ── MARQUEE ── */
+    .marquee {
+      overflow: hidden; border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      padding: 12px 0; background: var(--bg);
+      cursor: default; user-select: none;
+    }
+    .marquee__track { display: inline-flex; white-space: nowrap; animation: marqueeScroll 38s linear infinite; }
+    .marquee__item { font-family: var(--fd); font-size: 12px; letter-spacing: .22em; text-transform: uppercase; color: var(--text); padding: 0 18px; }
+    .marquee__sep { color: var(--gold); font-size: 6px; line-height: 2; }
+    @keyframes marqueeScroll { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+    /* ── COLLECTIONS ── */
+    .split { display: flex; flex-direction: column; }
+    .split__item {
+      position: relative; overflow: hidden;
+      height: 100svh; min-height: 500px;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer;
+    }
+    .split__img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: top center; filter: brightness(.72); }
+    .split__overlay {
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse at center, rgba(11,14,21,.28) 0%, rgba(11,14,21,.62) 100%);
+    }
+    .split__num {
+      position: absolute; top: 14px; right: 14px;
+      font-family: var(--fd); font-size: 76px; line-height: 1;
+      color: rgba(255,255,255,.05); pointer-events: none;
+    }
+    .split__body {
+      position: relative; z-index: 1;
+      text-align: center; padding: 0 var(--g);
+    }
+    .split__tag {
+      font-family: var(--fd); font-size: clamp(56px, 22vw, 88px); font-weight: 400;
+      letter-spacing: .1em; text-transform: uppercase; color: #fff;
+      display: block; line-height: .9; margin-bottom: 14px;
+    }
+    .split__sub {
+      font-family: var(--fi); font-size: 15px; font-weight: 300; font-style: italic;
+      color: rgba(255,255,255,.52); display: block;
+    }
+    .split__terrain {
+      font-family: var(--fi); font-size: 11px; font-weight: 300; font-style: italic;
+      color: rgba(255,255,255,.28); display: block; margin-top: 2px; letter-spacing: .14em;
+    }
+
+    /* ── SECTION HEADER ── */
+    .sec-head {
+      display: flex; align-items: flex-end; justify-content: space-between;
+      padding-bottom: 13px; border-bottom: 1px solid var(--border);
+      margin-bottom: 18px;
+    }
+    .sec-head__h { font-family: var(--fd); font-size: 38px; font-weight: 400; letter-spacing: .06em; text-transform: uppercase; color: var(--text); line-height: 1; }
+    .sec-head__all { font-family: var(--fb); font-size: 10px; font-weight: 300; letter-spacing: .18em; text-transform: uppercase; color: var(--muted); display: flex; align-items: center; gap: 5px; padding-bottom: 2px; min-height: 44px; }
+    .sec-head__all svg { width: 11px; height: 11px; fill: none; stroke: currentColor; stroke-width: 2; }
+
+    /* ── BRAND STORY ── */
+    .brand-m {
+      background: var(--bg);
+      border-top: 1px solid var(--border);
+    }
+    .brand-m__body { padding: 44px var(--g) 52px; }
+    .brand-m__h { font-family: var(--fd); font-size: 38px; font-weight: 400; line-height: 1; letter-spacing: .06em; text-transform: uppercase; color: var(--text); margin-bottom: 22px; }
+    .brand-m__p { font-family: var(--fb); font-size: 12px; font-weight: 300; line-height: 1.92; color: #4A4A4A; margin-bottom: 20px; text-align: justify; }
+.brand-m__btn {
+      display: inline-flex; align-items: center; gap: 0;
+      font-family: var(--fb); font-size: 12px; font-weight: 300;
+      letter-spacing: .08em; text-transform: uppercase; color: var(--text);
+      border: 1px solid var(--text); border-radius: 999px;
+      padding: 12px 24px; min-height: 48px; cursor: pointer;
+      overflow: hidden;
+      transition: background .26s ease, color .26s ease, border-color .26s ease;
+    }
+    .brand-m__btn svg {
+      width: 13px; height: 13px; fill: none; stroke: currentColor; stroke-width: 2; flex-shrink: 0;
+      opacity: 0; max-width: 0; margin-left: 0; transform: translateX(-4px);
+      transition: opacity .22s ease .06s, transform .22s ease .06s, max-width .22s ease, margin-left .22s ease;
+      overflow: hidden;
+    }
+
+    /* ── MANIFESTO ── */
+    .manifesto { background: var(--dk); padding: 129px var(--g); border-top: 1px solid rgba(255,255,255,.04); }
+    .manifesto__inner { text-align: center; }
+    .manifesto__text { font-family: var(--fi); font-size: 15px; font-style: italic; font-weight: 300; color: rgba(255,255,255,.3); line-height: 2.1; }
+    .manifesto__text em { font-style: normal; color: rgba(255,255,255,.65); }
+    .manifesto__sep { width: 20px; height: 1px; background: rgba(255,255,255,.12); margin: 22px auto; }
+
+    /* ── BEST-SELLERS ── */
+    .prods { padding: 36px 0 52px; background: var(--bg); }
+    .prods__head { padding: 0 var(--g); }
+    .prods__grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; padding: 0 var(--g); }
+    .prods__cta-wrap { padding: 0 var(--g); }
+    .pitem { cursor: pointer; }
+    .pitem__img-w { position: relative; overflow: hidden; aspect-ratio: 3/4; background: var(--bg2); }
+    .pitem__img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: top; }
+    .pitem__actions {
+      position: absolute; bottom: 0; left: 0; right: 0; z-index: 3;
+      padding: 10px;
+      background: linear-gradient(to top, rgba(11,14,21,.7) 0%, transparent 100%);
+    }
+    .pitem__add-btn {
+      width: 100%; padding: 10px 6px; background: rgba(250,250,248,.95);
+      color: var(--dk); font-family: var(--fb); font-size: 9px; font-weight: 400;
+      letter-spacing: .14em; text-transform: uppercase; text-align: center;
+      cursor: pointer; border: none; min-height: 36px;
+    }
+    .pitem__new { position: absolute; top: 8px; left: 8px; z-index: 4; font-family: var(--fb); font-size: 8px; font-weight: 400; letter-spacing: .14em; text-transform: uppercase; background: var(--dk); color: #fff; padding: 3px 8px; }
+    .pitem__body { padding: 10px 0 0; }
+    .pitem__name { font-family: var(--fd); font-size: 12px; font-weight: 400; letter-spacing: .06em; text-transform: uppercase; color: var(--text); margin-bottom: 3px; }
+    .pitem__desc { font-family: var(--fi); font-size: 11px; font-weight: 300; font-style: italic; color: var(--muted); line-height: 1.5; margin-bottom: 6px; }
+    .pitem__price { font-family: var(--fd); font-size: 14px; color: var(--text); }
+    .prods__cta { display: flex; justify-content: center; margin-top: 32px; }
+    .prods__cta-link {
+      display: inline-flex; align-items: center; gap: 0;
+      font-family: var(--fb); font-size: 12px; font-weight: 300;
+      letter-spacing: .14em; text-transform: uppercase; color: var(--text);
+      border: 1px solid rgba(12,12,12,.35); border-radius: 999px;
+      padding: 13px 28px; min-height: 50px; cursor: pointer; width: 100%; justify-content: center;
+      overflow: hidden;
+      transition: background .22s ease, border-color .22s ease, color .22s ease;
+    }
+    .prods__cta-link svg {
+      width: 13px; height: 13px; fill: none; stroke: currentColor; stroke-width: 2; flex-shrink: 0;
+      opacity: 0; max-width: 0; margin-left: 0; transform: translateX(-4px);
+      overflow: hidden;
+      transition: opacity .22s ease .06s, transform .22s ease .06s, max-width .22s ease, margin-left .22s ease;
+    }
+
+    /* ── BLOG — horizontal snap scroll ── */
+    .blog { padding: 36px 0 48px; background: var(--bg); border-top: 1px solid var(--border); }
+    .blog__head { padding: 0 var(--g); }
+    .blog__scroll {
+      overflow-x: scroll; -webkit-overflow-scrolling: touch;
+      overscroll-behavior-x: contain; scroll-snap-type: x mandatory;
+      scrollbar-width: none; padding: 18px 0 0;
+      display: flex; gap: 14px;
+    }
+    .blog__scroll::-webkit-scrollbar { display: none; }
+    .barticle { flex-shrink: 0; width: 76vw; max-width: 300px; scroll-snap-align: start; display: flex; flex-direction: column; cursor: pointer; }
+    .barticle:first-child { margin-left: var(--g); }
+    .barticle:last-child  { margin-right: var(--g); }
+    .barticle__img-w { position: relative; overflow: hidden; aspect-ratio: 4/3; background: var(--bg2); margin-bottom: 14px; }
+    .barticle__img { width: 100%; height: 100%; object-fit: cover; filter: brightness(.9); }
+    .barticle__cat { font-family: var(--fb); font-size: 8px; font-weight: 300; letter-spacing: .3em; text-transform: uppercase; color: var(--gold); margin-bottom: 7px; }
+    .barticle__title { font-family: var(--fd); font-size: 18px; font-weight: 400; line-height: 1.18; text-transform: uppercase; color: var(--text); margin-bottom: 8px; }
+    .barticle__desc { font-family: var(--fi); font-size: 13px; font-weight: 300; font-style: italic; line-height: 1.7; color: var(--muted); flex: 1; margin-bottom: 14px; }
+    .barticle__link { font-family: var(--fb); font-size: 10px; font-weight: 300; letter-spacing: .18em; text-transform: uppercase; color: var(--text); display: inline-flex; align-items: center; gap: 5px; border-bottom: 1px solid var(--border); padding-bottom: 3px; align-self: flex-start; min-height: 36px; }
+    .barticle__link svg { width: 11px; height: 11px; fill: none; stroke: currentColor; stroke-width: 2; }
+    .blog__dots { display: flex; justify-content: center; gap: 6px; margin-top: 18px; }
+    .blog__dot { width: 5px; height: 5px; border-radius: 50%; background: var(--border); transition: background .2s ease; }
+    .blog__dot.active { background: var(--text); }
+
+    /* ── TRUST BAR ── */
+    .trust { background: var(--bg); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+    .trust__item { display: flex; align-items: center; gap: 14px; padding: 16px var(--g); border-bottom: 1px solid var(--border); }
+    .trust__item:last-child { border-bottom: none; }
+    .trust__icon { flex-shrink: 0; color: var(--gold); }
+    .trust__icon svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 1.5; }
+    .trust__title { font-family: var(--fd); font-size: 13px; letter-spacing: .07em; color: var(--text); display: block; margin-bottom: 1px; }
+    .trust__sub { font-family: var(--fb); font-size: 11px; font-weight: 300; color: var(--muted); display: block; }
+
+    /* ── NEWSLETTER ── */
+    .nl { padding: 0 var(--g); background: var(--dk); position: relative; overflow: hidden; }
+    .nl__bg-text { position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); font-family: var(--fd); font-size: 24vw; color: rgba(255,255,255,.03); white-space: nowrap; pointer-events: none; user-select: none; }
+    .nl__inner { max-width: 100%; text-align: center; position: relative; z-index: 1; padding: 62px 0; }
+    .nl__tag { font-family: var(--fb); font-size: 9px; font-weight: 300; letter-spacing: .38em; text-transform: uppercase; color: var(--gold); margin-bottom: 14px; }
+    .nl__h { font-family: var(--fd); font-size: clamp(40px, 14vw, 60px); font-weight: 400; letter-spacing: -.01em; text-transform: uppercase; color: #fff; line-height: 1; margin-bottom: 8px; }
+    .nl__h2 { font-family: var(--fi); font-size: 15px; font-weight: 300; font-style: italic; color: rgba(255,255,255,.3); margin-bottom: 28px; line-height: 1.5; }
+    .nl__form { display: flex; border: 1px solid rgba(255,255,255,.1); transition: border-color .26s ease; }
+    .nl__form:focus-within { border-color: rgba(255,255,255,.26); }
+    .nl__input { flex: 1; background: transparent; border: none; outline: none; padding: 15px 14px; font-family: var(--fb); font-size: 13px; font-weight: 300; color: #fff; min-height: 52px; }
+    .nl__input::placeholder { color: rgba(255,255,255,.2); }
+    .nl__btn { padding: 15px 18px; background: transparent; border-left: 1px solid rgba(255,255,255,.1); cursor: pointer; font-family: var(--fb); font-size: 9px; font-weight: 300; letter-spacing: .2em; text-transform: uppercase; color: rgba(255,255,255,.55); white-space: nowrap; min-height: 52px; }
+    .nl__note { font-family: var(--fb); font-size: 10px; font-weight: 300; color: rgba(255,255,255,.24); margin-top: 14px; }
+
+    /* ── FOOTER accordion ── */
+    footer { background: var(--dk); border-top: 1px solid rgba(255,255,255,.05); padding-bottom: calc(80px + env(safe-area-inset-bottom, 0px)); }
+    .footer__top { padding: 40px var(--g) 28px; border-bottom: 1px solid rgba(255,255,255,.06); }
+    .footer__brand-name { font-family: var(--fd); font-size: 17px; letter-spacing: .24em; color: rgba(255,255,255,.9); line-height: 1; margin-bottom: 20px; }
+    .footer__nl-form { display: flex; align-items: center; border-bottom: 1px solid rgba(255,255,255,.14); padding-bottom: 10px; gap: 8px; margin-bottom: 18px; }
+    .footer__nl-input { flex: 1; background: none; border: none; outline: none; font-family: var(--fb); font-size: 10px; font-weight: 300; letter-spacing: .2em; text-transform: uppercase; color: rgba(255,255,255,.55); min-height: 44px; }
+    .footer__nl-input::placeholder { color: rgba(255,255,255,.22); }
+    .footer__nl-btn { background: none; border: none; cursor: pointer; color: rgba(255,255,255,.38); display: flex; align-items: center; justify-content: center; min-width: 44px; min-height: 44px; }
+    .footer__nl-btn svg { width: 16px; height: 16px; stroke: currentColor; stroke-width: 1.5; fill: none; }
+    .footer__desc { font-family: var(--fb); font-size: 11px; font-weight: 300; color: rgba(255,255,255,.22); line-height: 1.9; }
+
+    .footer__acc { border-bottom: 1px solid rgba(255,255,255,.06); }
+    .footer__acc-head { display: flex; align-items: center; justify-content: space-between; padding: 0 var(--g); cursor: pointer; min-height: 54px; }
+    .footer__acc-title { font-family: var(--fd); font-size: 15px; font-weight: 400; letter-spacing: .1em; text-transform: uppercase; color: rgba(255,255,255,.65); }
+    .footer__acc-icon { display: flex; align-items: center; justify-content: center; width: 28px; height: 28px; color: rgba(255,255,255,.3); transition: transform .22s ease; }
+    .footer__acc-icon svg { width: 14px; height: 14px; fill: none; stroke: currentColor; stroke-width: 1.5; }
+    .footer__acc.open .footer__acc-icon { transform: rotate(180deg); }
+    .footer__acc-body { max-height: 0; overflow: hidden; transition: max-height .3s ease; }
+    .footer__acc.open .footer__acc-body { max-height: 400px; }
+    .footer__acc-body ul { padding: 4px var(--g) 20px; }
+    .footer__acc-body ul li { margin-bottom: 0; }
+    .footer__acc-body ul a { font-family: var(--fb); font-size: 13px; font-weight: 300; color: rgba(255,255,255,.36); display: flex; align-items: center; min-height: 42px; }
+
+    .footer__bot { padding: 22px var(--g) 0; }
+    .footer__tagline { font-family: var(--fi); font-size: 11px; font-style: italic; font-weight: 300; color: rgba(255,255,255,.22); display: block; margin-bottom: 8px; }
+    .fcopy { font-family: var(--fb); font-size: 10px; font-weight: 300; color: rgba(255,255,255,.15); letter-spacing: .06em; text-transform: uppercase; }
+
+    /* ── STICKY CTA BAR ── */
+    .sticky-cta {
+      position: fixed; bottom: 0; left: 0; right: 0; z-index: 500;
+      background: rgba(11,14,21,.97); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+      padding: 14px var(--g) calc(14px + env(safe-area-inset-bottom, 0px));
+      border-top: none;
+      transform: translateY(100%);
+      transition: transform .38s cubic-bezier(0.22,1,0.36,1);
+    }
+    .sticky-cta.visible { transform: translateY(0); }
+    .sticky-cta__inner { display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+    .sticky-cta__left { display: flex; flex-direction: column; gap: 3px; min-width: 0; }
+    .sticky-cta__logo img {
+      height: 11px; width: auto; display: block;
+      filter: invert(1) brightness(10);
+    }
+    .sticky-cta__label {
+      font-family: var(--fi); font-size: 12px; font-style: italic; font-weight: 300;
+      color: rgba(255,255,255,.32); white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    }
+    .sticky-cta__btn {
+      font-family: var(--fb); font-size: 10px; font-weight: 300;
+      letter-spacing: .14em; text-transform: uppercase; color: #fff;
+      background: transparent; border: 1px solid rgba(255,255,255,.45);
+      border-radius: 999px; padding: 12px 20px; min-height: 46px;
+      cursor: pointer; white-space: nowrap; flex-shrink: 0;
+      display: flex; align-items: center; gap: 7px;
+      transition: border-color .22s ease, background .22s ease;
+    }
+    .sticky-cta__btn svg { width: 11px; height: 11px; fill: none; stroke: currentColor; stroke-width: 2; flex-shrink: 0; }
+
+    /* ── REVEAL ── */
+    .rv { opacity: 0; transform: translateY(18px); transition: opacity .7s ease, transform .7s ease; }
+    .rv.on { opacity: 1; transform: none; }
+    .d1 { transition-delay: .05s; } .d2 { transition-delay: .10s; }
+    .d3 { transition-delay: .16s; } .d4 { transition-delay: .22s; }
+
+    /* ── FOCUS ── */
+    :focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; }
+  </style>
+</head>
+<body>
+
+  <!-- BANNER -->
+  <div class="banner" id="banner" role="banner">
+    <div class="banner__ticker">
+      <span class="banner__msg" id="banner-msg"></span>
+    </div>
+    <button class="banner__close" id="banner-close" aria-label="Fermer">
+      <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+  </div>
+
+  <!-- NAV -->
+  <nav class="nav" id="nav">
+    <button class="nav__burger" id="burger" aria-label="Ouvrir le menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <a href="#" class="nav__logo">
+      <img src="https://www.premieremanche.com/01oslo/img/header/logo_line.png" alt="Premiere Manche">
+    </a>
+    <div class="nav__right">
+      <a class="nav__icon nav__cart" href="#" aria-label="Panier" id="cart-icon">
+        <svg viewBox="0 0 24 24"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+        <span class="nav__cart-badge" id="cart-badge">0</span>
+      </a>
+    </div>
+  </nav>
+
+  <!-- MOBILE MENU -->
+  <div class="nav__mobile" id="mobile-nav" aria-hidden="true">
+    <a href="#collections" class="nav__mobile-link" data-i18n="nav.formal">Formel</a>
+    <div class="nav__mobile-sep"></div>
+    <a href="#collections" class="nav__mobile-link" data-i18n="nav.casual">Casual</a>
+    <div class="nav__mobile-sep"></div>
+    <a href="#" class="nav__mobile-link" data-i18n="nav.about">À Propos</a>
+    <div class="nav__mobile-sep"></div>
+    <a href="#" class="nav__mobile-link" data-i18n="nav.advice">Conseils</a>
+    <div class="nav__mobile-sep"></div>
+    <a href="#" class="nav__mobile-link" data-i18n="nav.size">Ma Taille</a>
+    <div class="nav__mobile-icons">
+      <a href="#" data-i18n="nav.search">Rechercher</a>
+      <a href="#" data-i18n="nav.account">Compte</a>
+      <a href="#" data-i18n="nav.cart-label">Panier</a>
+    </div>
+    <div class="nav__mobile-lang">
+      <a href="#" data-lang="fr" class="active">FR</a>
+      <a href="#" data-lang="en">EN</a>
+    </div>
+  </div>
+
+  <!-- HERO -->
+  <section class="hero" id="hero">
+    <video class="hero__vid" autoplay muted loop playsinline>
+      <source src="https://villandraut.com/videos/Home-Video-1%20(3)(1).mp4" type="video/mp4">
+    </video>
+    <div class="hero__mask"></div>
+    <div class="hero__inner">
+      <h1 class="hero__h1">
+        <span data-i18n="hero.h1.1">La</span>
+        <span data-i18n="hero.h1.2">Chemise</span>
+        <span><em data-i18n="hero.h1.3">Parfaite.</em></span>
+      </h1>
+      <p class="hero__sub" data-i18n-html="hero.sub">Aucun plastique ni traitement chimique.<br>Un prix imbattable, une qualité sans faute.</p>
+      <div class="hero__ctas">
+        <a href="#collections" class="hero__cta">
+          <span data-i18n="hero.cta1">Formel</span>
+          <svg viewBox="0 0 24 24"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
+        </a>
+        <a href="#collections" class="hero__cta">
+          <span data-i18n="hero.cta2">Casual</span>
+          <svg viewBox="0 0 24 24"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
+        </a>
+      </div>
+    </div>
+    <div class="hero__scroll-cue" aria-hidden="true">
+      <div class="hero__scroll-line"></div>
+    </div>
+  </section>
+
+  <!-- MARQUEE -->
+  <div class="marquee" aria-hidden="true">
+    <div class="marquee__track">
+      <span class="marquee__item" data-i18n="mq.1">Packaging 100% biodégradable</span><span class="marquee__sep">&#9679;</span>
+      <span class="marquee__item" data-i18n="mq.2">Baleines en bois</span><span class="marquee__sep">&#9679;</span>
+      <span class="marquee__item" data-i18n="mq.3">Boutons cachés sous col</span><span class="marquee__sep">&#9679;</span>
+      <span class="marquee__item" data-i18n="mq.4">Tissus résistants</span><span class="marquee__sep">&#9679;</span>
+      <span class="marquee__item" data-i18n="mq.5">Coupe ajustée</span><span class="marquee__sep">&#9679;</span>
+      <span class="marquee__item" data-i18n="mq.6">Col italien</span><span class="marquee__sep">&#9679;</span>
+      <span class="marquee__item" data-i18n="mq.7">Boutons nacre</span><span class="marquee__sep">&#9679;</span>
+      <span class="marquee__item" data-i18n="mq.8">Coutures anglaises</span><span class="marquee__sep">&#9679;</span>
+      <span class="marquee__item" data-i18n="mq.14">Avantage Premiere Manche</span><span class="marquee__sep">&#9679;</span>
+      <span class="marquee__item" data-i18n="mq.9">Tissus 100% coton double retors</span><span class="marquee__sep">&#9679;</span>
+      <span class="marquee__item" data-i18n="mq.10">Coutures 7 pts/cm</span><span class="marquee__sep">&#9679;</span>
+      <span class="marquee__item" data-i18n="mq.11">Hirondelles de renfort</span><span class="marquee__sep">&#9679;</span>
+      <span class="marquee__item" data-i18n="mq.12">Boutons cousus en croix</span><span class="marquee__sep">&#9679;</span>
+      <span class="marquee__item" data-i18n="mq.13">Finitions luxueuses</span><span class="marquee__sep">&#9679;</span>
+      <span class="marquee__item" data-i18n="mq.15">6/0 — 6/0</span><span class="marquee__sep">&#9679;</span>
+      <span class="marquee__item" data-i18n="mq.1">Packaging 100% biodégradable</span><span class="marquee__sep">&#9679;</span>
+      <span class="marquee__item" data-i18n="mq.2">Baleines en bois</span><span class="marquee__sep">&#9679;</span>
+      <span class="marquee__item" data-i18n="mq.3">Boutons cachés sous col</span><span class="marquee__sep">&#9679;</span>
+      <span class="marquee__item" data-i18n="mq.4">Tissus résistants</span><span class="marquee__sep">&#9679;</span>
+      <span class="marquee__item" data-i18n="mq.5">Coupe ajustée</span><span class="marquee__sep">&#9679;</span>
+      <span class="marquee__item" data-i18n="mq.6">Col italien</span><span class="marquee__sep">&#9679;</span>
+      <span class="marquee__item" data-i18n="mq.7">Boutons nacre</span><span class="marquee__sep">&#9679;</span>
+      <span class="marquee__item" data-i18n="mq.8">Coutures anglaises</span><span class="marquee__sep">&#9679;</span>
+      <span class="marquee__item" data-i18n="mq.9">Tissus 100% coton double retors</span><span class="marquee__sep">&#9679;</span>
+      <span class="marquee__item" data-i18n="mq.10">Coutures 7 pts/cm</span><span class="marquee__sep">&#9679;</span>
+      <span class="marquee__item" data-i18n="mq.13">Finitions luxueuses</span><span class="marquee__sep">&#9679;</span>
+    </div>
+  </div>
+
+  <!-- COLLECTIONS -->
+  <section class="split rv" id="collections">
+    <a href="#" class="split__item">
+      <img class="split__img" src="https://villandraut.com/2773-large_default/chemises-formelles.jpg" alt="Chemises formelles Premiere Manche" loading="lazy">
+      <div class="split__overlay"></div>
+      <span class="split__num" aria-hidden="true">01</span>
+      <div class="split__body">
+        <span class="split__tag" data-i18n="split.formal.tag">Formel</span>
+        <span class="split__sub" data-i18n="split.formal.sub">Popeline · Twill · Fil-à-fil · Dobby</span>
+        <em class="split__terrain" data-i18n="split.formal.terrain">Pour les échanges qui comptent.</em>
+      </div>
+    </a>
+    <a href="#" class="split__item">
+      <img class="split__img" src="chemise-flanelle-beige.jpg" alt="Chemises casual Premiere Manche" loading="lazy">
+      <div class="split__overlay"></div>
+      <span class="split__num" aria-hidden="true">02</span>
+      <div class="split__body">
+        <span class="split__tag" data-i18n="split.casual.tag">Casual</span>
+        <span class="split__sub" data-i18n="split.casual.sub">Flanelle · Oxford · Denim</span>
+        <em class="split__terrain" data-i18n="split.terrain">Pour tous les terrains.</em>
+      </div>
+    </a>
+  </section>
+
+  <!-- BRAND STORY -->
+  <div class="brand-m rv">
+    <div class="brand-m__body">
+      <h2 class="brand-m__h" data-i18n-html="brand.h2">À propos de<br>Premiere Manche</h2>
+      <p class="brand-m__p" data-i18n-html="brand.p">Premiere Manche, la chemise de luxe et bien coupée que vous avez toujours cherchée. Spécialistes de la chemise homme, nous confectionnons les meilleurs tissus à base de coton, de lin, de cachemire et de chanvre pour vous proposer une expérience optimale et vous livrer des produits hors du commun, parce que le jeu en vaut la chemise.<br><br>Tous nos modèles sont confectionnés en Europe à partir de tissus provenant en majorité d'usines italiennes et japonaises. Les produits que nous proposons ont de plus été choisis pour la qualité du fil de coton utilisé et pour le côté artisanal du process de fabrication. L'origine, le poids et le titrage des chemises que nous vendons sont donnés et tracés. En achetant nos chemises formelles pour le bureau, unies, rayées ou à carreaux, ou nos chemises casual, en jean, en flanelle, en oxford, en chambray ou en lin, vous avez la garantie de porter un produit de qualité, que vous allez porter des années.<br><br>Nous privilégions également des emballages biodégradables et respectueux de l'environnement sans aucun plastique : nos baleines de col et nos cartes cadeaux sont en bois et notre packaging est en carton, kraft et amidon de maïs. En maîtrisant la chaine de fabrication, vous avez ici accès à des produits de luxe sans en payer le prix fort, avec la meilleure qualité de fabrication et une livraison exemplaire.</p>
+      <a href="https://www.premieremanche.com/fr/content/3-notre-histoire" class="brand-m__btn">
+        <span data-i18n="brand.btn">Tout afficher</span>
+        <svg viewBox="0 0 24 24"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
+      </a>
+    </div>
+  </div>
+
+  <!-- MANIFESTO -->
+  <section class="manifesto rv">
+    <div class="manifesto__inner">
+      <p class="manifesto__text" data-i18n-html="manifesto.p1">À vous qui passez par hasard. À vous qui venez averti. À vous déjà client.<br>À vous qui avez compris que dans un jeu, c'est souvent la première manche qui compte.<br><em>Certaines chemises traversent les saisons avec la même constance, sans une seule faute.</em></p>
+      <div class="manifesto__sep"></div>
+      <p class="manifesto__text" data-i18n-html="manifesto.p2">Premiere Manche crée une gamme complète de chemises indispensables, sans aucun plastique, à prix justes — des essentiels bien coupés, des vêtements solides qu'on prend plaisir à ressortir au fil des saisons, année après année.<br><em>Et si c'était ça, le luxe ?</em></p>
+    </div>
+  </section>
+
+  <!-- BEST-SELLERS -->
+  <section class="prods rv">
+    <div class="prods__head sec-head">
+      <span class="sec-head__h" data-i18n="bs.label">Best-sellers</span>
+      <a href="#" class="sec-head__all"><span data-i18n="bs.all">Voir tout</span><svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+    </div>
+    <div class="prods__grid">
+
+        <div class="pitem rv d1">
+          <div class="pitem__img-w">
+            <img class="pitem__img" src="https://www.premieremanche.com/1826/chemise-blanche-formelle-twill-non-transparente-repassage-facile.jpg" alt="Blanche Twill" loading="lazy">
+            <div class="pitem__actions"><button class="pitem__add-btn" data-i18n="bs.add">Ajouter au panier</button></div>
+          </div>
+          <div class="pitem__body">
+            <p class="pitem__name" data-i18n="p1.name">Blanche Twill Non-Iron</p>
+            <p class="pitem__desc" data-i18n="p1.desc">Sans repassage, pour tous les terrains</p>
+            <span class="pitem__price">89 €</span>
+          </div>
+        </div>
+
+        <div class="pitem rv d2">
+          <div class="pitem__img-w">
+            <img class="pitem__img" src="https://www.premieremanche.com/2022/chemise-casual-chambray-bleu-rayures-equidistantes.jpg" alt="Chambray Rayures" loading="lazy">
+            <span class="pitem__new" data-i18n="pitem.new">Nouveau</span>
+            <div class="pitem__actions"><button class="pitem__add-btn" data-i18n="bs.add">Ajouter au panier</button></div>
+          </div>
+          <div class="pitem__body">
+            <p class="pitem__name" data-i18n="p2.name">Chambray Rayures Bleues</p>
+            <p class="pitem__desc" data-i18n="p2.desc">Les rayures du court central</p>
+            <span class="pitem__price">99 €</span>
+          </div>
+        </div>
+
+        <div class="pitem rv d3">
+          <div class="pitem__img-w">
+            <img class="pitem__img" src="https://www.premieremanche.com/2201/chemise-formelle-popeline-micro-carreaux-bleu-clair.jpg" alt="Mini Carreaux Bleu" loading="lazy">
+            <div class="pitem__actions"><button class="pitem__add-btn" data-i18n="bs.add">Ajouter au panier</button></div>
+          </div>
+          <div class="pitem__body">
+            <p class="pitem__name" data-i18n="p3.name">Mini Carreaux Bleu Bureau</p>
+            <p class="pitem__desc" data-i18n="p3.desc">L'avantage au bureau, dès le premier échange</p>
+            <span class="pitem__price">109 €</span>
+          </div>
+        </div>
+
+        <div class="pitem rv d4">
+          <div class="pitem__img-w">
+            <img class="pitem__img" src="https://www.premieremanche.com/2502/chemise-decontractee-flanelle-bleue-tres-douce-coton-italie.jpg" alt="Flanelle Beige" loading="lazy">
+            <div class="pitem__actions"><button class="pitem__add-btn" data-i18n="bs.add">Ajouter au panier</button></div>
+          </div>
+          <div class="pitem__body">
+            <p class="pitem__name" data-i18n="p4.name">Flanelle Beige Brossée</p>
+            <p class="pitem__desc" data-i18n="p4.desc">Pour les matchs du week-end</p>
+            <span class="pitem__price">109 €</span>
+          </div>
+        </div>
+
+        <div class="pitem rv d4">
+          <div class="pitem__img-w">
+            <img class="pitem__img" src="https://www.premieremanche.com/2218/chemise-homme-casual-japonaise-a-rayures-grises-et-col-officier.jpg" alt="Surchemise Tartan" loading="lazy">
+            <span class="pitem__new" data-i18n="pitem.new">Nouveau</span>
+            <div class="pitem__actions"><button class="pitem__add-btn" data-i18n="bs.add">Ajouter au panier</button></div>
+          </div>
+          <div class="pitem__body">
+            <p class="pitem__name" data-i18n="p5.name">Surchemise Tartan Laine</p>
+            <p class="pitem__desc" data-i18n="p5.desc">Le jeu continue, même par temps froid</p>
+            <span class="pitem__price">129 €</span>
+          </div>
+        </div>
+
+      </div>
+    <div class="prods__cta-wrap">
+      <div class="prods__cta">
+        <a href="#" class="prods__cta-link">
+          <span data-i18n="bs.cta">Voir toute la collection</span>
+          <svg viewBox="0 0 24 24"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- BLOG — carousel horizontal -->
+  <section class="blog rv">
+    <div class="blog__head sec-head">
+      <span class="sec-head__h" data-i18n="blog.label">Le Journal</span>
+      <a href="https://www.premieremanche.com/fr/blog" class="sec-head__all"><span data-i18n="blog.all">Tous les articles</span><svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+    </div>
+    <div class="blog__scroll" id="blogScroll">
+      <article class="barticle">
+        <div class="barticle__img-w"><img class="barticle__img" src="https://www.premieremanche.com/img/cms/chemise-formelle-popeline-raies-bleues-fines-2.jpg" alt="Chemise bureau" loading="lazy"></div>
+        <p class="barticle__cat" data-i18n="a1.cat">Style</p>
+        <h3 class="barticle__title" data-i18n="a1.title">La chemise pour le bureau</h3>
+        <p class="barticle__desc" data-i18n="a1.desc">Tissu, coupe, col — les trois points qui font la différence dès le premier échange. La chemise au service de votre image au bureau.</p>
+        <a href="https://www.premieremanche.com/fr/blog/la-chemise-homme-pour-le-bureau-comment-bien-choisir--n87" class="barticle__link"><span data-i18n="blog.read">Lire l'article</span><svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+      </article>
+      <article class="barticle">
+        <div class="barticle__img-w"><img class="barticle__img" src="https://www.premieremanche.com/img/cms/chemise-lin-rouille.jpg" alt="Lin hiver" loading="lazy"></div>
+        <p class="barticle__cat" data-i18n="a2.cat">Matières</p>
+        <h3 class="barticle__title" data-i18n="a2.title">Le lin, même en hiver</h3>
+        <p class="barticle__desc" data-i18n="a2.desc">Régulation thermique, douceur, caractère. Le lin remporte son tie-break contre l'hiver avec la même élégance.</p>
+        <a href="https://www.premieremanche.com/fr/blog/les-chemises-en-lin-pourquoi-les-adopter-meme-en-hiver--n86" class="barticle__link"><span data-i18n="blog.read">Lire l'article</span><svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+      </article>
+      <article class="barticle">
+        <div class="barticle__img-w"><img class="barticle__img" src="https://www.premieremanche.com/img/cms/chemise-bio-oxford-bleu.jpg" alt="Chemise hiver" loading="lazy"></div>
+        <p class="barticle__cat" data-i18n="a3.cat">Saison</p>
+        <h3 class="barticle__title" data-i18n="a3.title">La chemise idéale en hiver</h3>
+        <p class="barticle__desc" data-i18n="a3.desc">Comment choisir la chemise qui garde l'avantage dans les mois les plus froids.</p>
+        <a href="https://www.premieremanche.com/fr/blog/comment-choisir-la-chemise-ideale-pour-lhiver--n85" class="barticle__link"><span data-i18n="blog.read">Lire l'article</span><svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+      </article>
+    </div>
+    <div class="blog__dots" id="blogDots">
+      <div class="blog__dot active"></div>
+      <div class="blog__dot"></div>
+      <div class="blog__dot"></div>
+    </div>
+  </section>
+
+  <!-- TRUST BAR -->
+  <div class="trust rv">
+    <div class="trust__item">
+      <span class="trust__icon"><svg viewBox="0 0 24 24"><rect x="1" y="3" width="15" height="13" rx="1"/><path d="M16 8h4l3 3v5h-7V8z"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg></span>
+      <span><span class="trust__title" data-i18n="trust.t1">Livraison 24–48h</span><span class="trust__sub" data-i18n="trust.s1">Emballage éco sans plastique</span></span>
+    </div>
+    <div class="trust__item">
+      <span class="trust__icon"><svg viewBox="0 0 24 24"><polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><polyline points="7 23 3 19 7 15"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg></span>
+      <span><span class="trust__title" data-i18n="trust.t2">Échanges & remboursements</span><span class="trust__sub" data-i18n="trust.s2">30 jours, sans condition</span></span>
+    </div>
+    <div class="trust__item">
+      <span class="trust__icon"><svg viewBox="0 0 24 24"><circle cx="6" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><line x1="20" y1="4" x2="8.12" y2="15.88"/><line x1="14.47" y1="14.48" x2="20" y2="20"/><line x1="8.12" y1="8.12" x2="12" y2="12"/></svg></span>
+      <span><span class="trust__title" data-i18n="trust.t3">Coupe ajustée & baleines bois</span><span class="trust__sub" data-i18n="trust.s3">Finitions artisanales</span></span>
+    </div>
+  </div>
+
+  <!-- NEWSLETTER -->
+  <section class="nl rv">
+    <div class="nl__bg-text" aria-hidden="true" data-i18n="nl.bg">Accès Privé</div>
+    <div class="nl__inner">
+      <p class="nl__tag" data-i18n="nl.tag">Membres exclusifs</p>
+      <h2 class="nl__h" data-i18n="nl.h">Accès Privé</h2>
+      <p class="nl__h2" data-i18n="nl.h2">Nouveautés, ventes privées & conseils style</p>
+      <form class="nl__form" onsubmit="return false;">
+        <input class="nl__input" type="email" placeholder="Votre adresse e-mail" aria-label="Adresse e-mail" data-i18n-placeholder="nl.placeholder">
+        <button class="nl__btn" type="submit" data-i18n="nl.btn">Rejoindre</button>
+      </form>
+      <p class="nl__note" data-i18n="nl.note">Désabonnement en un clic — aucun spam</p>
+    </div>
+  </section>
+
+  <!-- FOOTER accordion -->
+  <footer>
+    <div class="footer__top">
+      <p class="footer__brand-name">PREMIERE MANCHE</p>
+      <form class="footer__nl-form" onsubmit="return false;">
+        <input class="footer__nl-input" type="email" placeholder="Email" aria-label="Email" data-i18n-placeholder="ft.email.placeholder">
+        <button class="footer__nl-btn" type="submit" aria-label="S'inscrire">
+          <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </button>
+      </form>
+      <p class="footer__desc" data-i18n="ft.desc">Premiere Manche est une marque de chemises haut de gamme & accessibles. Nos chemises sont irréprochables par leur qualité de coton, leur coupe et leurs finitions.</p>
+    </div>
+
+    <div class="footer__acc" id="acc1">
+      <div class="footer__acc-head" onclick="toggleAcc('acc1')">
+        <span class="footer__acc-title" data-i18n="ft.col1.h">Service Clientèle</span>
+        <span class="footer__acc-icon"><svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></span>
+      </div>
+      <div class="footer__acc-body"><ul>
+        <li><a href="#" data-i18n="ft.col1.l1">Mon compte</a></li>
+        <li><a href="#" data-i18n="ft.col1.l2">Mon suivi de commande</a></li>
+        <li><a href="#" data-i18n="ft.col1.l3">Livraison</a></li>
+        <li><a href="#" data-i18n="ft.col1.l4">Retours / Échanges</a></li>
+        <li><a href="#" data-i18n="ft.col1.l5">Size Advisor</a></li>
+        <li><a href="#" data-i18n="ft.col1.l6">Cartes cadeaux</a></li>
+      </ul></div>
+    </div>
+
+    <div class="footer__acc" id="acc2">
+      <div class="footer__acc-head" onclick="toggleAcc('acc2')">
+        <span class="footer__acc-title" data-i18n="ft.col2.h">Achat Sécurisé</span>
+        <span class="footer__acc-icon"><svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></span>
+      </div>
+      <div class="footer__acc-body"><ul>
+        <li><a href="#" data-i18n="ft.col2.l1">Presse</a></li>
+        <li><a href="#" data-i18n="ft.col2.l2">Nos tarifs</a></li>
+        <li><a href="#" data-i18n="ft.col2.l3">Contactez-nous</a></li>
+        <li><a href="#" data-i18n="ft.col2.l4">Recrutement</a></li>
+        <li><a href="#" data-i18n="ft.col2.l5">Mentions légales</a></li>
+        <li><a href="#" data-i18n="ft.col2.l6">À propos</a></li>
+      </ul></div>
+    </div>
+
+    <div class="footer__acc" id="acc3">
+      <div class="footer__acc-head" onclick="toggleAcc('acc3')">
+        <span class="footer__acc-title" data-i18n="ft.col3.h">Garanties</span>
+        <span class="footer__acc-icon"><svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></span>
+      </div>
+      <div class="footer__acc-body"><ul>
+        <li><a href="#" data-i18n="ft.col3.l1">Services</a></li>
+        <li><a href="#" data-i18n="ft.col3.l2">Nos tissus</a></li>
+        <li><a href="#" data-i18n="ft.col3.l3">Nos cols</a></li>
+        <li><a href="#" data-i18n="ft.col3.l4">Commentaires</a></li>
+        <li><a href="#" data-i18n="ft.col3.l5">FAQ</a></li>
+        <li><a href="#" data-i18n="ft.col3.l6">Conseils</a></li>
+      </ul></div>
+    </div>
+
+    <div class="footer__bot">
+      <em class="footer__tagline">Le jeu en vaut la chemise.</em>
+      <span class="fcopy" data-i18n="ft.copy">© 2026 – Premiere Manche™</span>
+    </div>
+  </footer>
+
+  <!-- STICKY CTA — apparaît après le hero -->
+  <div class="sticky-cta" id="stickyCta">
+    <div class="sticky-cta__inner">
+      <div class="sticky-cta__left">
+        <div class="sticky-cta__logo">
+          <img src="https://www.premieremanche.com/01oslo/img/header/logo_line.png" alt="Premiere Manche">
+        </div>
+        <span class="sticky-cta__label">Jeu, set et Match.</span>
+      </div>
+      <a href="#collections" class="sticky-cta__btn">
+        <span data-i18n="split.formal.link">Voir la collection</span>
+        <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+      </a>
+    </div>
+  </div>
+
+  <!-- ── COOKIE POPUP — EDITION TENNIS ── -->
+  <style>
+  .ck-overlay{position:fixed;inset:0;z-index:99999;display:flex;align-items:center;justify-content:center;padding:12px;background:rgba(0,0,0,0);pointer-events:none;transition:background .4s ease}
+  .ck-overlay.show{background:rgba(0,0,0,.5);pointer-events:auto}
+  .ck-popup{background:#F5EDE0;border:1px solid rgba(194,80,42,.18);width:100%;max-width:880px;overflow:hidden;transform:translateY(20px);opacity:0;transition:transform .52s cubic-bezier(.22,1,.36,1),opacity .38s ease;position:relative;display:flex;flex-direction:column}
+  .ck-overlay.show .ck-popup{transform:translateY(0);opacity:1}
+  .ck-score{background:#C2502A;padding:10px 18px;display:flex;align-items:center;justify-content:space-between;gap:8px}
+  .ck-score__label{font:300 8px/1 var(--fb);letter-spacing:.28em;text-transform:uppercase;color:rgba(255,255,255,.85)}
+  .ck-score__board{display:flex;border:1px solid rgba(255,255,255,.35);overflow:hidden;flex-shrink:0}
+  .ck-score__cell{font:400 12px/1 var(--fd);letter-spacing:.04em;padding:4px 10px;border-right:1px solid rgba(255,255,255,.25);color:rgba(255,255,255,.72)}
+  .ck-score__cell:last-child{border-right:none}
+  .ck-score__cell.hi{color:#fff}
+  .ck-close{position:absolute;top:52px;right:14px;width:30px;height:30px;border-radius:50%;border:1.5px solid rgba(194,80,42,.45);background:none;cursor:pointer;display:flex;align-items:center;justify-content:center;color:#C2502A;transition:border-color .2s,color .2s;z-index:2}
+  .ck-close:hover{border-color:#C2502A;color:#8A2E10}
+  .ck-close svg{width:12px;height:12px;stroke:currentColor;stroke-width:2;fill:none}
+  .ck-body{padding:22px 26px 0}
+  .ck-ref{font:300 8px/1.4 var(--fb);letter-spacing:.24em;text-transform:uppercase;color:rgba(28,9,5,.3);margin-bottom:14px}
+  .ck-ref em{font-style:italic;font-family:var(--fi);font-size:10px;letter-spacing:.04em;color:#C2502A;text-transform:none}
+  .ck-title{font:400 clamp(34px,9vw,52px)/.9 var(--fd);letter-spacing:.06em;text-transform:uppercase;color:#1C0905;margin:0 0 6px}
+  .ck-tagline{font:300 italic clamp(19px,5vw,30px)/1.2 var(--fi);color:#C2502A;margin:0 0 20px}
+  .ck-divider{display:flex;align-items:center;gap:10px;margin:0 0 20px}
+  .ck-divider__ball{width:16px;height:16px;flex-shrink:0}
+  .ck-divider__line{flex:1;height:0;border-top:1.5px dashed rgba(194,80,42,.4)}
+  .ck-desc{font:300 12px/1.8 var(--fb);color:rgba(28,9,5,.55);margin:0 0 20px}
+  .ck-desc p{margin:0 0 8px}
+  .ck-desc p:last-child{margin:0}
+  .ck-btns{display:flex;flex-direction:column;gap:10px}
+  .ck-btn{display:block;width:100%;padding:14px 16px;font:400 10px/1 var(--fb);letter-spacing:.22em;text-transform:uppercase;cursor:pointer;text-align:center;transition:background .2s,color .2s,border-color .2s}
+  .ck-btn--ace{background:#C2502A;color:#fff;border:none}
+  .ck-btn--ace:hover{background:#8A2E10}
+  .ck-btn--filet{background:transparent;color:#C2502A;border:1.5px solid rgba(194,80,42,.5)}
+  .ck-btn--filet:hover{color:#8A2E10;border-color:#C2502A}
+  .ck-fine{padding:16px 26px;border-top:1px solid rgba(194,80,42,.15);display:flex;align-items:center;gap:10px;margin-top:auto}
+  .ck-fine svg{width:16px;height:16px;flex-shrink:0;stroke:#C2502A;fill:none;stroke-width:1.5;opacity:.6}
+  .ck-fine__text{font:300 italic 10px/1.5 var(--fi);color:rgba(28,9,5,.38)}
+  .ck-main{display:flex;flex:1}
+  .ck-left{display:flex;flex-direction:column;flex:1;min-width:0}
+  .ck-right{width:42%;flex-shrink:0;overflow:hidden}
+  .ck-right img{width:100%;height:100%;object-fit:cover;display:block}
+  </style>
+  <div id="ck" class="ck-overlay" role="dialog" aria-modal="true" aria-labelledby="ck-title">
+    <div class="ck-popup">
+      <div class="ck-score">
+        <span class="ck-score__label">PM Cookies Open · Court Central</span>
+        <div class="ck-score__board">
+          <span class="ck-score__cell">PM</span>
+          <span class="ck-score__cell">15</span>
+          <span class="ck-score__cell">30</span>
+          <span class="ck-score__cell hi">40</span>
+        </div>
+      </div>
+      <button class="ck-close" onclick="ckAccept('necessary')" aria-label="Fermer">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+      <div class="ck-main">
+        <div class="ck-left">
+          <div class="ck-body">
+            <p class="ck-ref">Arbitre principal : <em>Maître Cookie Garros</em></p>
+            <h2 id="ck-title" class="ck-title">Ce site utilise<br>des cookies.</h2>
+            <p class="ck-tagline">Pas ceux qui tachent la chemise.</p>
+            <div class="ck-divider" aria-hidden="true">
+              <svg class="ck-divider__ball" viewBox="0 0 32 32">
+                <circle cx="16" cy="16" r="14" fill="none" stroke="#C2502A" stroke-width="2" opacity=".55"/>
+                <path d="M4 16c0-6.6 5.4-12 12-12M4 16c0 6.6 5.4 12 12 12M28 16c0-6.6-5.4-12-12-12M28 16c0 6.6-5.4 12-12 12" fill="none" stroke="#C2502A" stroke-width="2" opacity=".55"/>
+              </svg>
+              <div class="ck-divider__line"></div>
+              <svg class="ck-divider__ball" viewBox="0 0 32 32">
+                <circle cx="16" cy="16" r="14" fill="none" stroke="#C2502A" stroke-width="2" opacity=".55"/>
+                <path d="M4 16c0-6.6 5.4-12 12-12M4 16c0 6.6 5.4 12 12 12M28 16c0-6.6-5.4-12-12-12M28 16c0 6.6-5.4 12-12 12" fill="none" stroke="#C2502A" stroke-width="2" opacity=".55"/>
+              </svg>
+            </div>
+            <div class="ck-desc">
+              <p>Certains sont essentiels — sans eux, la partie s'arrête net.</p>
+              <p>D'autres nous aident à améliorer votre jeu (et le nôtre).</p>
+            </div>
+            <div class="ck-btns">
+              <button class="ck-btn ck-btn--ace" onclick="ckAccept('all')">On joue avec les cookies</button>
+              <button class="ck-btn ck-btn--filet" onclick="ckAccept('necessary')">Service minimum</button>
+            </div>
+          </div>
+          <div class="ck-fine">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></svg>
+            <span class="ck-fine__text">Promis, ici, pas de faux rebond.</span>
+          </div>
+        </div>
+        <div class="ck-right">
+          <img src="Photo cookies.jpg" alt="Chemise Première Manche" loading="lazy">
+        </div>
+      </div>
+    </div>
+  </div>
+  <script>
+    (function(){
+      const ck=document.getElementById('ck');
+      setTimeout(()=>ck.classList.add('show'),750);
+      window.ckAccept=function(c){
+        localStorage.setItem('pm-ck',c);
+        ck.classList.remove('show');
+        setTimeout(()=>{if(ck.parentNode)ck.parentNode.removeChild(ck);},500);
+      };
+    })();
+  </script>
+
+  <script>
+    // ── i18n ──────────────────────────────────────────────────────────────────
+    const i18n = {
+      fr: {
+        bannerMsgs: ['Expéditions deux fois par jour', 'Livraison express 24–48h', 'Retours 30 jours'],
+        'nav.formal':'Formel','nav.casual':'Casual','nav.about':'À Propos','nav.advice':'Conseils','nav.size':'Ma Taille',
+        'nav.search':'Rechercher','nav.account':'Compte','nav.cart-label':'Panier',
+        'hero.h1.1':'La','hero.h1.2':'Chemise','hero.h1.3':'Parfaite.',
+        'hero.sub':'Aucun plastique (boutons, baleines, packaging) ni traitement chimique.<br>Un prix imbattable, une qualité sans faute.',
+        'hero.cta1':'Formel','hero.cta2':'Casual',
+        'mq.1':'Packaging 100% biodégradable','mq.2':'Baleines en bois','mq.3':'Boutons cachés sous col',
+        'mq.4':'Tissus résistants','mq.5':'Coupe ajustée','mq.6':'Col italien','mq.7':'Boutons nacre',
+        'mq.8':'Coutures anglaises','mq.9':'Tissus 100% coton double retors','mq.10':'Coutures 7 pts/cm',
+        'mq.11':'Hirondelles de renfort','mq.12':'Boutons cousus en croix','mq.13':'Finitions luxueuses','mq.14':'Avantage Premiere Manche','mq.15':'6/0 — 6/0',
+        'split.formal.tag':'Formel','split.formal.sub':'Popeline · Twill · Fil-à-fil · Dobby','split.formal.link':'Voir la collection','split.formal.terrain':'Pour les échanges qui comptent.',
+        'split.casual.tag':'Casual','split.casual.sub':'Flanelle · Oxford · Denim','split.casual.link':'Voir la collection',
+        'split.terrain':'Pour tous les terrains.',
+        'brand.h2':'À propos de<br>Premiere Manche',
+        'brand.p':'Premiere Manche, la chemise de luxe et bien coupée que vous avez toujours cherchée. Spécialistes de la chemise homme, nous confectionnons les meilleurs tissus à base de coton, de lin, de cachemire et de chanvre pour vous proposer une expérience optimale et vous livrer des produits hors du commun, parce que le jeu en vaut la chemise.<br><br>Tous nos modèles sont confectionnés en Europe à partir de tissus provenant en majorité d\'usines italiennes et japonaises. Les produits que nous proposons ont de plus été choisis pour la qualité du fil de coton utilisé et pour le côté artisanal du process de fabrication. L\'origine, le poids et le titrage des chemises que nous vendons sont donnés et tracés. En achetant nos chemises formelles pour le bureau, unies, rayées ou à carreaux, ou nos chemises casual, en jean, en flanelle, en oxford, en chambray ou en lin, vous avez la garantie de porter un produit de qualité, que vous allez porter des années.<br><br>Nous privilégions également des emballages biodégradables et respectueux de l\'environnement sans aucun plastique : nos baleines de col et nos cartes cadeaux sont en bois et notre packaging est en carton, kraft et amidon de maïs. En maîtrisant la chaine de fabrication, vous avez ici accès à des produits de luxe sans en payer le prix fort, avec la meilleure qualité de fabrication et une livraison exemplaire.',
+        'brand.btn':'Tout afficher',
+        'manifesto.p1':'À vous qui passez par hasard. À vous qui venez averti. À vous déjà client.<br>À vous qui avez compris que dans un jeu, c\'est souvent la première manche qui compte.<br><em>Certaines chemises traversent les saisons avec la même constance, sans une seule faute.</em>',
+        'manifesto.p2':'Premiere Manche crée une gamme complète de chemises indispensables, sans aucun plastique, à prix justes — des essentiels bien coupés, des vêtements solides qu\'on prend plaisir à ressortir au fil des saisons, année après année.<br><em>Et si c\'était ça, le luxe ?</em>',
+        'bs.label':'Best-sellers','bs.all':'Voir tout','bs.add':'Ajouter au panier','bs.cta':'Voir toute la collection',
+        'p1.name':'Blanche Twill Non-Iron','p1.desc':'Sans repassage, pour tous les terrains',
+        'p2.name':'Chambray Rayures Bleues','p2.desc':'Les rayures du court central',
+        'p3.name':'Mini Carreaux Bleu Bureau','p3.desc':'L\'avantage au bureau, dès le premier échange',
+        'p4.name':'Flanelle Beige Brossée','p4.desc':'Pour les matchs du week-end',
+        'p5.name':'Surchemise Tartan Laine','p5.desc':'Le jeu continue, même par temps froid',
+        'pitem.new':'Nouveau',
+        'blog.label':'Le Journal','blog.all':'Tous les articles','blog.read':'Lire l\'article',
+        'a1.cat':'Style','a1.title':'La chemise pour le bureau','a1.desc':'Tissu, coupe, col — les trois points qui font la différence dès le premier échange. La chemise au service de votre image au bureau.',
+        'a2.cat':'Matières','a2.title':'Le lin, même en hiver','a2.desc':'Régulation thermique, douceur, caractère. Le lin remporte son tie-break contre l\'hiver avec la même élégance.',
+        'a3.cat':'Saison','a3.title':'La chemise idéale en hiver','a3.desc':'Comment choisir la chemise qui garde l\'avantage dans les mois les plus froids.',
+        'trust.t1':'Livraison 24–48h','trust.s1':'Emballage éco sans plastique',
+        'trust.t2':'Échanges & remboursements','trust.s2':'30 jours, sans condition',
+        'trust.t3':'Coupe ajustée & baleines bois','trust.s3':'Finitions artisanales',
+        'nl.bg':'Accès Privé','nl.tag':'Membres exclusifs','nl.h':'Accès Privé',
+        'nl.h2':'Nouveautés, ventes privées & conseils style',
+        'nl.placeholder':'Votre adresse e-mail','nl.btn':'Rejoindre','nl.note':'Désabonnement en un clic — aucun spam',
+        'ft.email.placeholder':'Email',
+        'ft.desc':'Premiere Manche est une marque de chemises haut de gamme & accessibles. Nos chemises sont irréprochables par leur qualité de coton, leur coupe et leurs finitions.',
+        'ft.col1.h':'Service Clientèle','ft.col1.l1':'Mon compte','ft.col1.l2':'Mon suivi de commande',
+        'ft.col1.l3':'Livraison','ft.col1.l4':'Retours / Échanges','ft.col1.l5':'Size Advisor','ft.col1.l6':'Cartes cadeaux',
+        'ft.col2.h':'Achat Sécurisé','ft.col2.l1':'Presse','ft.col2.l2':'Nos tarifs',
+        'ft.col2.l3':'Contactez-nous','ft.col2.l4':'Recrutement','ft.col2.l5':'Mentions légales','ft.col2.l6':'À propos',
+        'ft.col3.h':'Garanties','ft.col3.l1':'Services','ft.col3.l2':'Nos tissus',
+        'ft.col3.l3':'Nos cols','ft.col3.l4':'Commentaires','ft.col3.l5':'FAQ','ft.col3.l6':'Conseils',
+        'ft.copy':'© 2026 – Premiere Manche™'
+      },
+      en: {
+        bannerMsgs: ['Shipped twice a day', 'Express delivery 24–48h', 'Free returns 30 days'],
+        'nav.formal':'Formal','nav.casual':'Casual','nav.about':'About','nav.advice':'Style Guide','nav.size':'My Size',
+        'nav.search':'Search','nav.account':'Account','nav.cart-label':'Cart',
+        'hero.h1.1':'The','hero.h1.2':'Perfect','hero.h1.3':'Shirt.',
+        'hero.sub':'No plastic (buttons, collar stays, packaging) or chemical treatments.<br>An unbeatable price, a flawless quality.',
+        'hero.cta1':'Formal','hero.cta2':'Casual',
+        'mq.1':'100% biodegradable packaging','mq.2':'Wooden collar stays','mq.3':'Hidden collar buttons',
+        'mq.4':'Durable fabrics','mq.5':'Slim fit','mq.6':'Italian collar','mq.7':'Mother-of-pearl buttons',
+        'mq.8':'French seams','mq.9':'100% double-twisted cotton','mq.10':'7 stitches/cm',
+        'mq.11':'Bartack reinforcements','mq.12':'Cross-stitched buttons','mq.13':'Luxury finishes','mq.14':'Advantage Premiere Manche','mq.15':'6/0 — 6/0',
+        'split.formal.tag':'Formal','split.formal.sub':'Poplin · Twill · End-on-end · Dobby','split.formal.link':'View collection','split.formal.terrain':'For the exchanges that matter.',
+        'split.casual.tag':'Casual','split.casual.sub':'Flannel · Oxford · Denim','split.casual.link':'View collection',
+        'split.terrain':'For every court.',
+        'brand.h2':'About<br>Premiere Manche',
+        'brand.p':'Premiere Manche — the luxury, well-cut shirt you\'ve always been looking for. Specialists in men\'s shirts, we source the finest cotton, linen, cashmere and hemp fabrics to deliver an outstanding experience.<br><br>All our shirts are made in Europe from fabrics sourced mainly from Italian and Japanese mills. We prioritise biodegradable, plastic-free packaging: wooden collar stays, cardboard &amp; kraft packaging. Exemplary delivery.',
+        'brand.btn':'View all',
+        'manifesto.p1':'To those who stumble upon us. To those who come recommended. To existing customers.<br>To those who understand that in any game, it\'s often the first set that matters.<br><em>Some shirts travel through the seasons with the same consistency, without a single fault.</em>',
+        'manifesto.p2':'Premiere Manche crafts a full range of essential shirts, plastic-free, at honest prices — well-cut staples, solid garments you\'ll enjoy reaching for season after season.<br><em>What if that\'s what luxury truly is?</em>',
+        'bs.label':'Best Sellers','bs.all':'View all','bs.add':'Add to cart','bs.cta':'View the full collection',
+        'p1.name':'White Twill Non-Iron','p1.desc':'Non-iron, for every court',
+        'p2.name':'Blue Stripe Chambray','p2.desc':'The stripes of centre court',
+        'p3.name':'Blue Mini Check','p3.desc':'The office advantage, from the first rally',
+        'p4.name':'Brushed Beige Flannel','p4.desc':'For the weekend matches',
+        'p5.name':'Tartan Wool Overshirt','p5.desc':'The game goes on, even in the cold',
+        'pitem.new':'New',
+        'blog.label':'The Journal','blog.all':'All articles','blog.read':'Read article',
+        'a1.cat':'Style','a1.title':'The office shirt','a1.desc':'Fabric, cut, collar — the three points that make all the difference from the very first rally. The shirt at the service of your image at work.',
+        'a2.cat':'Fabrics','a2.title':'Linen, even in winter','a2.desc':'Thermal regulation, softness, character. Linen wins its tie-break against winter with the same elegance.',
+        'a3.cat':'Season','a3.title':'The perfect winter shirt','a3.desc':'How to find the shirt that keeps the advantage in the coldest months.',
+        'trust.t1':'Delivery 24–48h','trust.s1':'Eco packaging, plastic-free',
+        'trust.t2':'Returns & refunds','trust.s2':'30 days, no questions asked',
+        'trust.t3':'Slim fit & wooden collar stays','trust.s3':'Handcrafted finishes',
+        'nl.bg':'Private Access','nl.tag':'Exclusive members','nl.h':'Private Access',
+        'nl.h2':'New arrivals, private sales & style tips',
+        'nl.placeholder':'Your email address','nl.btn':'Join','nl.note':'One-click unsubscribe — no spam',
+        'ft.email.placeholder':'Email',
+        'ft.desc':'Premiere Manche is a premium yet accessible shirt brand. Our shirts are impeccable in cotton quality, cut, and finish.',
+        'ft.col1.h':'Customer Service','ft.col1.l1':'My account','ft.col1.l2':'Track my order',
+        'ft.col1.l3':'Shipping','ft.col1.l4':'Returns / Exchanges','ft.col1.l5':'Size Advisor','ft.col1.l6':'Gift cards',
+        'ft.col2.h':'Secure Purchase','ft.col2.l1':'Press','ft.col2.l2':'Our prices',
+        'ft.col2.l3':'Contact us','ft.col2.l4':'Careers','ft.col2.l5':'Legal notices','ft.col2.l6':'About',
+        'ft.col3.h':'Guarantees','ft.col3.l1':'Services','ft.col3.l2':'Our fabrics',
+        'ft.col3.l3':'Our collars','ft.col3.l4':'Reviews','ft.col3.l5':'FAQ','ft.col3.l6':'Style guide',
+        'ft.copy':'© 2026 – Premiere Manche™'
+      }
+    };
+
+    let currentLang = 'fr';
+
+    function applyLang(lang) {
+      const t = i18n[lang];
+      document.documentElement.lang = lang;
+      bannerMsgs = t.bannerMsgs;
+      document.querySelectorAll('[data-i18n]').forEach(el => { const v = t[el.dataset.i18n]; if (v !== undefined) el.textContent = v; });
+      document.querySelectorAll('[data-i18n-html]').forEach(el => { const v = t[el.dataset.i18nHtml]; if (v !== undefined) el.innerHTML = v; });
+      document.querySelectorAll('[data-i18n-placeholder]').forEach(el => { const v = t[el.dataset.i18nPlaceholder]; if (v !== undefined) el.placeholder = v; });
+    }
+
+    // Lang — sélecteur dans le menu mobile
+    document.querySelectorAll('[data-lang]').forEach(a => {
+      a.addEventListener('click', e => {
+        e.preventDefault();
+        const lang = a.dataset.lang;
+        if (lang === currentLang) return;
+        currentLang = lang;
+        document.querySelectorAll('[data-lang]').forEach(l => l.classList.toggle('active', l.dataset.lang === lang));
+        applyLang(lang);
+      });
+    });
+
+    // Banner
+    let bannerMsgs = i18n.fr.bannerMsgs;
+    (function() {
+      let idx = 0;
+      const el = document.getElementById('banner-msg');
+      function next() {
+        el.textContent = bannerMsgs[idx % bannerMsgs.length];
+        el.classList.remove('run'); void el.offsetWidth; el.classList.add('run');
+        idx = (idx + 1) % bannerMsgs.length;
+      }
+      el.addEventListener('animationend', () => setTimeout(next, 400));
+      next();
+      document.getElementById('banner-close').addEventListener('click', hideBanner);
+      let gone = false;
+      window.addEventListener('scroll', () => { if (!gone && window.scrollY > 8) { gone = true; hideBanner(); } }, { passive: true });
+      function hideBanner() {
+        document.getElementById('banner').classList.add('hidden');
+        document.documentElement.style.setProperty('--banner-h', '0px');
+      }
+    })();
+
+    // Nav — scroll-linked hide/show
+    const nav = document.getElementById('nav');
+    const NAV_H = nav.offsetHeight;
+    let lastScrollY = window.scrollY;
+    let navOffset = 0;
+
+    window.addEventListener('scroll', () => {
+      const y = window.scrollY;
+      nav.classList.toggle('lit', y > 40);
+
+      if (y < 80) {
+        navOffset = 0;
+        nav.style.transform = '';
+        lastScrollY = y;
+        return;
+      }
+
+      const delta = y - lastScrollY;
+      navOffset = Math.max(0, Math.min(NAV_H, navOffset + delta));
+      nav.style.transform = `translateY(${-navOffset}px)`;
+      lastScrollY = y;
+    }, { passive: true });
+
+    // Burger
+    const burger = document.getElementById('burger');
+    const mobileNav = document.getElementById('mobile-nav');
+    burger.addEventListener('click', () => {
+      const open = burger.classList.toggle('open');
+      mobileNav.classList.toggle('open', open);
+      burger.setAttribute('aria-expanded', open);
+      mobileNav.setAttribute('aria-hidden', !open);
+      document.body.style.overflow = open ? 'hidden' : '';
+    });
+    mobileNav.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+      burger.classList.remove('open'); mobileNav.classList.remove('open');
+      burger.setAttribute('aria-expanded','false'); mobileNav.setAttribute('aria-hidden','true');
+      document.body.style.overflow = '';
+    }));
+
+    // Cart badge
+    let cartCount = 0;
+    const cartBadge = document.getElementById('cart-badge');
+    document.querySelectorAll('.pitem__add-btn').forEach(btn => btn.addEventListener('click', () => { cartCount++; cartBadge.textContent = cartCount; }));
+
+    // Footer accordion
+    function toggleAcc(id) { document.getElementById(id).classList.toggle('open'); }
+
+    // Blog dots
+    const blogScroll = document.getElementById('blogScroll');
+    const dots = document.querySelectorAll('.blog__dot');
+    if (blogScroll) {
+      blogScroll.addEventListener('scroll', () => {
+        const items = blogScroll.querySelectorAll('.barticle');
+        if (!items.length) return;
+        const idx = Math.round(blogScroll.scrollLeft / (items[0].offsetWidth + 14));
+        dots.forEach((d, i) => d.classList.toggle('active', i === idx));
+      }, { passive: true });
+    }
+
+    // Sticky CTA — apparaît dès que la section brand entre dans le viewport
+    const stickyCta = document.getElementById('stickyCta');
+    const brandEl = document.querySelector('.brand-m');
+    new IntersectionObserver(entries => {
+      stickyCta.classList.toggle('visible', entries[0].isIntersecting || entries[0].boundingClientRect.top < 0);
+    }, { threshold: 0, rootMargin: '0px 0px -10% 0px' }).observe(brandEl);
+
+    // Reveal
+    const revObs = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('on'); revObs.unobserve(e.target); } });
+    }, { threshold: 0.08 });
+    document.querySelectorAll('.rv').forEach(el => revObs.observe(el));
+  </script>
+</body>
+</html>
